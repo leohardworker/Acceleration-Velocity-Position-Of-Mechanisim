@@ -1,0 +1,20 @@
+# Constants
+g = 9.81  # Acceleration due to gravity (m/s^2)
+
+# User input
+initial_velocity = float(input("Enter initial velocity (m/s): "))
+initial_position = float(input("Enter initial position (m): "))
+time = float(input("Enter time (s): "))
+
+# Calculating acceleration (1st equation of motion: F = m * a -> a = F / m)
+acceleration = g
+
+# Calculating velocity (2nd equation of motion: v = u + at -> v: final velocity, u: initial velocity, a: acceleration, t: time)
+velocity = initial_velocity + acceleration * time
+
+# Calculating position (3rd equation of motion: s = ut + (1/2)at^2 -> s: position, u: initial velocity, a: acceleration, t: time)
+position = initial_position + initial_velocity * time + 0.5 * acceleration * time**2
+
+# Printing the results
+print("Final velocity: {:.2f} m/s".format(velocity))
+print("Final position: {:.2f} m".format(position))
