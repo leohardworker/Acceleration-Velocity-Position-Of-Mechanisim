@@ -1,0 +1,64 @@
+import matplotlib.pyplot as plt
+
+class Mechanism:
+    def __init__(self, initial_velocity, initial_position):
+        self.velocity = initial_velocity
+        self.position = initial_position
+        self.velocities = [self.velocity]
+        self.accelerations = []
+        self.positions = [self.position]
+        self.times = [0]
+
+    def calculate_acceleration(self, force, mass):
+        # Newton's second law of motion: F = m * a -> a = F / m
+        acceleration = force / mass
+        return acceleration
+
+    def update(self, time, force, mass):
+        # Update acceleration, velocity, and position using motion equations
+        acceleration = self.calculate_acceleration(force, mass)
+        self.accelerations.append(acceleration)
+        self.velocity = self.velocity + acceleration * time
+        self.velocities.append(self.velocity)
+        self.position = self.position + self.velocity * time + 0.5 * acceleration * time**2
+        self.positions.append(self.position)
+        self.times.append(self.times[-1] + time)
+
+# User input
+initial_velocity = float(input("Enter initial velocity (m/s): "))
+initial_position = float(input("Enter initial position (m): "))
+time_interval = float(input("Enter time interval (s): "))
+total_time = float(input("Enter total time (s): "))
+force = float(input("Enter applied force (N): "))
+mass = float(input("Enter the mass of the mechanism (kg): "))
+
+# Create the mechanism
+mechanism = Mechanism(initial_velocity, initial_position)
+
+# Update velocity, acceleration, and position over time
+while mechanism.times[-1] < total_time:
+    mechanism.update(time_interval, force, mass)
+
+# Plotting the graphs
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.plot(mechanism.times, mechanism.velocities)
+plt.xlabel("Time (s)")
+plt.ylabel("Velocity (m/s)")
+plt.title("Velocity vs Time")
+
+plt.subplot(1, 3, 2)
+plt.plot(mechanism.times[:-1], mechanism.accelerations)
+plt.xlabel("Time (s)")
+plt.ylabel("Acceleration (m/s^2)")
+plt.title("Acceleration vs Time")
+
+plt.subplot(1, 3, 3)
+plt.plot(mechanism.times, mechanism.positions)
+plt.xlabel("Time (s)")
+plt.ylabel("Position (m)")
+plt.title("Position vs Time")
+
+plt.tight_layout()
+plt.show()
