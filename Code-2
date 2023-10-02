@@ -1,0 +1,32 @@
+class Mechanism:
+    def __init__(self, initial_velocity, initial_position):
+        self.velocity = initial_velocity
+        self.position = initial_position
+
+    def calculate_acceleration(self, force, mass):
+        # Newton's second law of motion: F = m * a -> a = F / m
+        acceleration = force / mass
+        return acceleration
+
+    def update(self, time, force, mass):
+        # Update acceleration, velocity, and position using motion equations
+        acceleration = self.calculate_acceleration(force, mass)
+        self.velocity = self.velocity + acceleration * time
+        self.position = self.position + self.velocity * time + 0.5 * acceleration * time**2
+
+# User input
+initial_velocity = float(input("Enter initial velocity (m/s): "))
+initial_position = float(input("Enter initial position (m): "))
+time = float(input("Enter time (s): "))
+force = float(input("Enter applied force (N): "))
+mass = float(input("Enter the mass of the mechanism (kg): "))
+
+# Create the mechanism
+mechanism = Mechanism(initial_velocity, initial_position)
+
+# Calculate updated velocity and position over time
+mechanism.update(time, force, mass)
+
+# Print the results
+print("Final velocity: {:.2f} m/s".format(mechanism.velocity))
+print("Final position: {:.2f} m".format(mechanism.position))
